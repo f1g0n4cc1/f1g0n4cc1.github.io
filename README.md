@@ -31,8 +31,8 @@ A premium, high-performance personal landing page and portfolio designed for cyb
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/f1g0n4cc1/landing-page.git
-   cd landing-page
+   git clone https://github.com/f1g0n4cc1/f1g0n4cc1.github.io.git
+   cd f1g0n4cc1.github.io
    ```
 
 2. **Install dependencies:**
@@ -55,20 +55,20 @@ A premium, high-performance personal landing page and portfolio designed for cyb
 ## 📁 Project Structure
 
 ```text
-├── app/
-│   ├── src/
-│   │   ├── sections/     # Core page sections (Hero, Projects, Contact, etc.)
-│   │   ├── components/   # Reusable UI components (Shadcn/ui)
-│   │   ├── data/         # Hardcoded data (projects, testimonials)
-│   │   ├── hooks/        # Custom React hooks
-│   │   ├── types/        # TypeScript interfaces and types
-│   │   ├── App.tsx       # Main application entry
-│   │   └── index.css     # Global styles and tailwind directives
-│   ├── public/           # Static assets
-│   ├── tailwind.config.js
-│   └── vite.config.ts
-├── README.md
-└── .gitignore
+├── src/           # Core page sections, components, hooks, etc.
+│   ├── sections/     # Page sections (Hero, Projects, Contact, etc.)
+│   ├── components/   # Reusable UI components
+│   ├── data/         # Hardcoded data (projects, testimonials)
+│   ├── hooks/        # Custom React hooks
+│   ├── types/        # TypeScript interfaces and types
+│   ├── App.tsx       # Main application entry
+│   └── index.css     # Global styles
+├── public/        # Static assets
+├── index.html     # Entry point
+├── tailwind.config.js
+├── vite.config.ts
+├── postcss.config.js
+└── README.md
 ```
 
 ## 📄 License
