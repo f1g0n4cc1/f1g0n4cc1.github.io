@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Menu, X } from 'lucide-react';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,10 +14,24 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+    // Prevent scrolling when menu is open
+    if (!isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  };
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+      document.body.style.overflow = 'auto';
     }
   };
 
@@ -36,7 +52,16 @@ const Navigation = () => {
           JF
         </button>
 
-        {/* Nav Links */}
+        {/* Mobile Toggle */}
+        <button 
+          onClick={toggleMobileMenu}
+          className="md:hidden text-cyber-white p-2 hover:text-cyber-magenta transition-colors"
+          aria-label="Toggle Menu"
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
+        {/* Nav Links (Desktop) */}
         <div className="hidden md:flex items-center gap-8">
           <a href="#projects" onClick={(e) => { e.preventDefault(); scrollToSection('projects'); }} className="nav-link">
             Work
@@ -50,6 +75,49 @@ const Navigation = () => {
           <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="nav-link">
             Contact
           </a>
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <div 
+        className={`fixed inset-0 z-[90] bg-cyber-black/95 backdrop-blur-2xl transition-all duration-500 md:hidden ${
+          isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="flex flex-col items-center justify-center min-h-screen gap-10">
+          <a 
+            href="#projects" 
+            onClick={(e) => { e.preventDefault(); scrollToSection('projects'); }} 
+            className="text-3xl font-display font-medium text-cyber-white tracking-widest uppercase hover:text-cyber-magenta transition-colors"
+          >
+            Work
+          </a>
+          <a 
+            href="#training" 
+            onClick={(e) => { e.preventDefault(); scrollToSection('training'); }} 
+            className="text-3xl font-display font-medium text-cyber-white tracking-widest uppercase hover:text-cyber-magenta transition-colors"
+          >
+            Services
+          </a>
+          <a 
+            href="#detection" 
+            onClick={(e) => { e.preventDefault(); scrollToSection('detection'); }} 
+            className="text-3xl font-display font-medium text-cyber-white tracking-widest uppercase hover:text-cyber-magenta transition-colors"
+          >
+            About
+          </a>
+          <a 
+            href="#contact" 
+            onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} 
+            className="text-3xl font-display font-medium text-cyber-white tracking-widest uppercase hover:text-cyber-magenta transition-colors"
+          >
+            Contact
+          </a>
+          
+          <div className="mt-8 pt-8 border-t border-white/10 w-40 flex flex-col items-center gap-4">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-cyber-magenta">Jacopo Falcone</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-cyber-gray">Security Specialist</span>
+          </div>
         </div>
       </div>
     </nav>
