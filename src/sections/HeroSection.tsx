@@ -55,49 +55,36 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
     return () => ctx.revert();
   }, []);
 
-  // Scroll animation
+  // Scroll animation (Entry/Exit)
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: '+=100%',
-          pin: true,
-          scrub: 0.4,
-          onLeaveBack: () => {
-            // Reset all elements to visible when scrolling back to top
-            gsap.set([headlineRef.current, subRef.current, cardRef.current], {
-              opacity: 1, x: 0, y: 0
-            });
-            gsap.set(bgRef.current, { scale: 1, x: 0 });
+      // Entry Animation: Slide Up & Fade In
+      gsap.fromTo([headlineRef.current, subRef.current],
+        { y: 60, opacity: 0 },
+        { 
+          y: 0, 
+          opacity: 1, 
+          duration: 0.8,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
           }
         }
-      });
-
-      // EXIT phase (60% - 100%) - faster exit
-      scrollTl.fromTo(headlineRef.current,
-        { x: 0, opacity: 1 },
-        { x: '-18vw', opacity: 0, ease: 'power2.in' },
-        0.6
       );
 
-      scrollTl.fromTo(subRef.current,
-        { x: 0, opacity: 1 },
-        { x: '-18vw', opacity: 0, ease: 'power2.in' },
-        0.62
-      );
-
-      scrollTl.fromTo(cardRef.current,
-        { x: 0, opacity: 1 },
-        { x: '10vw', opacity: 0, ease: 'power2.in' },
-        0.6
-      );
-
-      scrollTl.fromTo(bgRef.current,
-        { scale: 1, x: 0 },
-        { scale: 1.08, x: '-4vw', ease: 'none' },
-        0.6
+      gsap.fromTo(cardRef.current,
+        { x: 60, opacity: 0 },
+        { 
+          x: 0, 
+          opacity: 1, 
+          duration: 0.8,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 75%',
+            toggleActions: 'play none none reverse'
+          }
+        }
       );
     }, sectionRef);
 
@@ -135,76 +122,74 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
       {/* Overlay */}
       <div className="section-overlay" />
       
-      {/* Scrollable Container (Mobile Only) */}
-      <div className="absolute inset-0 overflow-y-auto md:overflow-hidden">
-        <div className="relative min-h-full flex flex-col md:flex-row items-stretch md:items-end p-0">
-          
-          {/* Headline Block Container */}
-          <div className="flex-1 flex items-end pb-[10vh] px-[6vw] mt-[20vh] md:mt-0 order-2 md:order-1">
-            <div className="w-full max-w-[90vw] md:max-w-[70vw]">
-              <div ref={headlineRef} className="mb-6">
-                <h1 className="headline-display text-[clamp(28px,5.2vw,84px)]">
-                  <span className="headline-line block">Security Engineer</span>
-                  <span className="headline-line block">OSINT Ninja</span>
-                  <span className="headline-line block">Pragmatic Optimist</span>
-                </h1>
-              </div>
+      {/* Content Container */}
+      <div className="relative min-h-[100vh] flex flex-col md:flex-row items-stretch md:items-end p-0">
+        
+        {/* Headline Block Container */}
+        <div className="flex-1 flex items-end pb-[10vh] px-[6vw] mt-[20vh] md:mt-0">
+          <div className="w-full max-w-[90vw] md:max-w-[70vw]">
+            <div ref={headlineRef} className="mb-6">
+              <h1 className="headline-display text-[clamp(28px,5.2vw,84px)]">
+                <span className="headline-line block">Security Engineer</span>
+                <span className="headline-line block">OSINT Ninja</span>
+                <span className="headline-line block">Pragmatic Optimist</span>
+              </h1>
+            </div>
 
-              <div ref={subRef}>
-                <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.08em] text-cyber-gray mb-6">
-                  Detection • Automation • Threat Hunting • Career Coaching
-                </p>
+            <div ref={subRef}>
+              <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.08em] text-cyber-gray mb-6">
+                Detection • Automation • Threat Hunting • Career Coaching
+              </p>
 
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                  <a href="#projects" onClick={(e) => { e.preventDefault(); scrollToProjects(); }} className="btn-primary flex items-center justify-center gap-2">
-                    View Projects
-                    <ArrowRight size={14} />
-                  </a>
-                  <a href="#training" onClick={(e) => { e.preventDefault(); scrollToTraining(); }} className="btn-ghost flex items-center justify-center gap-2">
-                    <Calendar size={14} />
-                    Book a Session
-                  </a>
-                </div>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                <a href="#projects" onClick={(e) => { e.preventDefault(); scrollToProjects(); }} className="btn-primary flex items-center justify-center gap-2">
+                  View Projects
+                  <ArrowRight size={14} />
+                </a>
+                <a href="#training" onClick={(e) => { e.preventDefault(); scrollToTraining(); }} className="btn-ghost flex items-center justify-center gap-2">
+                  <Calendar size={14} />
+                  Book a Session
+                </a>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Info Card Container */}
-          <div className="md:absolute md:right-[4vw] md:top-[12vh] p-[6vw] md:p-0 order-1 md:order-2">
-            <div 
-              ref={cardRef}
-              className="w-full md:w-[26vw] md:min-w-[280px] info-card"
-            >
-              <h2 className="font-display font-bold text-lg text-cyber-white mb-1">
-                Jacopo Falcone
-              </h2>
-              <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-cyber-magenta mb-4">
-                Security Engineer · OSINT Specialist · Coach
-              </p>
-              <p className="text-sm text-cyber-gray leading-relaxed mb-4">
-                Focused on understanding how systems behave, how attackers think, and how defenses can be engineered to be resilient.
-              </p>
-              <div className="flex items-center gap-4 pt-4 border-t border-white/8">
-                <div>
-                  <span className="font-display font-bold text-xl text-cyber-white">Top 5%</span>
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">TryHackMe Global</span>
-                </div>
-                <div className="w-px h-8 bg-white/10" />
-                <div>
-                  <span className="font-display font-bold text-xl text-cyber-white">Top 3</span>
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">LetsDefend Finland</span>
-                </div>
+        {/* Info Card Container */}
+        <div className="md:absolute md:right-[4vw] md:top-[12vh] p-[6vw] md:p-0">
+          <div 
+            ref={cardRef}
+            className="w-full md:w-[26vw] md:min-w-[280px] info-card"
+          >
+            <h2 className="font-display font-bold text-lg text-cyber-white mb-1">
+              Jacopo Falcone
+            </h2>
+            <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-cyber-magenta mb-4">
+              Security Engineer · OSINT Specialist · Coach
+            </p>
+            <p className="text-sm text-cyber-gray leading-relaxed mb-4">
+              Focused on understanding how systems behave, how attackers think, and how defenses can be engineered to be resilient.
+            </p>
+            <div className="flex items-center gap-4 pt-4 border-t border-white/8">
+              <div>
+                <span className="font-display font-bold text-xl text-cyber-white">Top 5%</span>
+                <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">TryHackMe Global</span>
               </div>
-              <div className="flex items-center gap-4 pt-3 mt-3 border-t border-white/8">
-                <div>
-                  <span className="font-display font-bold text-xl text-cyber-white">20+</span>
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">Detection Rules</span>
-                </div>
-                <div className="w-px h-8 bg-white/10" />
-                <div>
-                  <span className="font-display font-bold text-xl text-cyber-white">10+</span>
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">Yrs Leadership</span>
-                </div>
+              <div className="w-px h-8 bg-white/10" />
+              <div>
+                <span className="font-display font-bold text-xl text-cyber-white">Top 3</span>
+                <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">LetsDefend Finland</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 pt-3 mt-3 border-t border-white/8">
+              <div>
+                <span className="font-display font-bold text-xl text-cyber-white">20+</span>
+                <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">Detection Rules</span>
+              </div>
+              <div className="w-px h-8 bg-white/10" />
+              <div>
+                <span className="font-display font-bold text-xl text-cyber-white">10+</span>
+                <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">Yrs Leadership</span>
               </div>
             </div>
           </div>

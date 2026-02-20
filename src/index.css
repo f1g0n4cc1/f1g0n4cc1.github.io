@@ -36,8 +36,6 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y proximity;
-    scroll-padding-top: 80px; /* Approximate header height */
   }
 
   @media (hover: none) {
@@ -53,16 +51,8 @@
   }
   
   section {
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
-  }
-}
-
-/* Layer for section snapping */
-@layer utilities {
-  .snap-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    position: relative;
+    width: 100%;
   }
 }
 
@@ -92,17 +82,15 @@
 /* Section base styles */
 .section-pinned {
   position: relative;
-  width: 100vw;
-  height: 100dvh;
-  min-height: 100dvh;
-  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  overflow: visible;
 }
 
 @media (max-width: 768px) {
   .section-pinned {
     height: auto;
     min-height: 100dvh;
-    overflow: visible;
   }
 }
 
