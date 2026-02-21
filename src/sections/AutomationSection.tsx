@@ -5,11 +5,7 @@ import { ArrowRight, Workflow, Code, Database, Ticket, TrendingDown, Mail } from
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface AutomationSectionProps {
-  className?: string;
-}
-
-const AutomationSection = ({ className = '' }: AutomationSectionProps) => {
+const AutomationSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const bgRef = useRef<HTMLImageElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
@@ -20,11 +16,12 @@ const AutomationSection = ({ className = '' }: AutomationSectionProps) => {
     const ctx = gsap.context(() => {
       // Entry Animation
       gsap.fromTo(headlineRef.current,
-        { y: 60, opacity: 0 },
+        { y: 30, opacity: 0 },
         { 
           y: 0, 
           opacity: 1, 
-          duration: 0.8,
+          duration: 1,
+          ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 80%',
@@ -34,11 +31,13 @@ const AutomationSection = ({ className = '' }: AutomationSectionProps) => {
       );
 
       gsap.fromTo(cardRef.current,
-        { x: 60, opacity: 0 },
+        { y: 20, opacity: 0 },
         { 
-          x: 0, 
+          y: 0, 
           opacity: 1, 
-          duration: 0.8,
+          duration: 1,
+          delay: 0.2,
+          ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 75%',
@@ -74,80 +73,83 @@ const AutomationSection = ({ className = '' }: AutomationSectionProps) => {
     <section 
       ref={sectionRef}
       id="automation"
-      className={`section-pinned ${className}`}
+      className="relative w-full bg-background py-20 lg:py-40 overflow-hidden"
     >
-      {/* Background Image */}
-      <img
-        ref={bgRef}
-        src="/noc_room.jpg"
-        alt="NOC Room"
-        className="section-bg"
-      />
-      
-      {/* Overlay */}
-      <div className="section-overlay" />
-
-      {/* Content Container */}
-      <div className="relative min-h-[100vh] flex flex-col md:flex-row items-center md:items-end justify-center md:justify-start p-[6vw] md:p-0">
+      <div className="container mx-auto px-6 lg:px-12 relative flex flex-col md:flex-row items-center md:items-start gap-12 lg:gap-24">
         
-        {/* Headline */}
-        <div 
-          ref={headlineRef}
-          className="md:absolute md:left-[6vw] md:bottom-[10vh] w-full md:w-[74vw] mb-12 md:mb-0"
-        >
-          <h2 className="headline-display text-[clamp(40px,5.5vw,88px)]">
-            <span className="block">Security</span>
-            <span className="block">Automation</span>
-          </h2>
+        {/* Visual Frame (Ma) */}
+        <div className="relative w-full md:w-1/2 aspect-[4/5] md:aspect-square overflow-hidden border border-border/10">
+          <img
+            ref={bgRef}
+            src="/noc_room.jpg"
+            alt="NOC Room"
+            className="w-full h-full object-cover transition-opacity duration-700"
+          />
+          <div className="absolute top-8 left-8">
+            <div className="shoji-line w-12 mb-4" />
+            <span className="text-[10px] font-mono uppercase tracking-widest text-foreground/40">Section 03</span>
+          </div>
         </div>
 
-        {/* Info Card */}
-        <div 
-          ref={cardRef}
-          className="md:absolute md:right-[4vw] md:top-[10vh] w-full md:w-[26vw] md:min-w-[280px] info-card"
-        >
-          <h3 className="font-display font-bold text-lg text-cyber-white mb-4">
-            Security Automation
-          </h3>
-          <ul className="space-y-3 mb-4">
-            {features.map((feature, index) => (
-              <li key={index} className="flex items-center gap-3">
-                <feature.icon size={16} className="text-cyber-magenta flex-shrink-0" />
-                <span className="text-sm text-cyber-gray">{feature.text}</span>
-              </li>
-            ))}
-          </ul>
+        {/* Content Area */}
+        <div className="flex-1 flex flex-col">
+          <div ref={headlineRef} className="mb-12">
+            <h2 className="headline-display text-[clamp(44px,6vw,96px)] text-foreground tracking-tighter leading-[0.85]">
+              Security<br />
+              <span className="ml-[4vw]">Automation</span>
+            </h2>
+          </div>
 
-          {/* Tools */}
-          <div className="pt-4 border-t border-white/8 mb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray block mb-2">Platforms</span>
-            <div className="flex flex-wrap gap-2">
-              {tools.map((tool, index) => (
-                <span key={index} className="px-2 py-1 bg-white/5 rounded text-[10px] text-cyber-white font-mono">
-                  {tool}
-                </span>
+          <div 
+            ref={cardRef}
+            className="info-card max-w-lg"
+          >
+            <h3 className="text-primary font-display font-bold text-xs uppercase tracking-[0.2em] mb-8">
+              Orchestration & Tooling
+            </h3>
+            
+            <ul className="grid grid-cols-1 gap-6 mb-12">
+              {features.map((feature, index) => (
+                <li key={index} className="flex items-start gap-4 group">
+                  <div className="mt-1">
+                    <feature.icon size={18} className="text-foreground/20 group-hover:text-primary transition-colors" />
+                  </div>
+                  <span className="text-sm font-medium leading-relaxed">{feature.text}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="pt-10 border-t border-border/10 mb-10">
+              <span className="font-mono text-[9px] uppercase tracking-widest text-foreground/40 block mb-4">Ecosystem</span>
+              <div className="flex flex-wrap gap-2">
+                {tools.map((tool, index) => (
+                  <span key={index} className="px-3 py-1.5 border border-border/10 text-[10px] text-foreground/60 font-mono lowercase">
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-10 pt-10 border-t border-border/10 mb-10">
+              {metrics.map((metric, index) => (
+                <div key={index} className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl font-bold tracking-tight">{metric.value}</span>
+                    <metric.icon size={14} className="text-primary" />
+                  </div>
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-foreground/40">{metric.label}</span>
+                </div>
               ))}
             </div>
-          </div>
 
-          {/* Metrics */}
-          <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/8 mb-4">
-            {metrics.map((metric, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <metric.icon size={14} className="text-cyber-magenta flex-shrink-0" />
-                <span className="font-display font-bold text-lg text-cyber-white">{metric.value}</span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">{metric.label}</span>
-              </div>
-            ))}
+            <button 
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              className="link-accent flex items-center gap-3"
+            >
+              examine automation playbooks
+              <ArrowRight size={14} />
+            </button>
           </div>
-
-          <button 
-            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-            className="link-accent flex items-center gap-2"
-          >
-            See automation work
-            <ArrowRight size={12} />
-          </button>
         </div>
       </div>
     </section>

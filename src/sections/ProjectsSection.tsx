@@ -1,7 +1,7 @@
 import { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ExternalLink } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { projects } from '../data/projects';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -57,58 +57,58 @@ const ProjectsSection = () => {
     <section 
       ref={sectionRef}
       id="projects"
-      className="relative bg-cyber-black py-[8vh] px-[6vw]"
+      className="relative bg-background py-20 lg:py-40 px-6 lg:px-12"
     >
       {/* Header */}
-      <div ref={headerRef} className="mb-12">
-        <h2 className="headline-display text-[clamp(32px,4vw,64px)] mb-3">
+      <div ref={headerRef} className="container mx-auto mb-20 md:mb-32">
+        <h2 className="headline-display text-[clamp(44px,6vw,96px)] text-[#000000] mb-6">
           Selected Work
         </h2>
-        <p className="font-mono text-xs uppercase tracking-[0.08em] text-cyber-gray">
-          A few builds, detections, and investigations.
+        <div className="shoji-line w-24 mb-6" />
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/40 max-w-sm">
+          A focused collection of digital builds, automated detections, and forensic investigations.
         </p>
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
         {projects.map((project, idx) => (
           <div
             key={idx}
             ref={el => { cardsRef.current[idx] = el; }}
-            className="project-card group cursor-pointer"
+            className="project-card group"
           >
-            <div className="p-6">
-              {/* Icon & Category */}
-              <div className="flex items-start justify-between mb-4">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${project.color} flex items-center justify-center`}>
-                  <project.icon size={24} className="text-cyber-white" />
-                </div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-magenta">
+            <div className="p-10 lg:p-12">
+              {/* Category & Tag */}
+              <div className="flex items-center justify-between mb-10">
+                <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-primary font-bold">
                   {project.category}
                 </span>
+                <div className="w-8 h-[1px] bg-border/20" />
               </div>
 
               {/* Content */}
-              <h3 className="font-display font-bold text-xl text-cyber-white mb-2 group-hover:text-cyber-magenta transition-colors">
+              <h3 className="headline-display text-4xl text-[#000000] mb-6 group-hover:text-primary transition-colors">
                 {project.title}
               </h3>
-              <p className="text-sm text-cyber-gray leading-relaxed mb-4">
+              
+              <p className="text-sm font-medium leading-relaxed text-foreground/60 mb-10 max-w-md">
                 {project.description}
               </p>
 
               {/* Tools */}
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap gap-4 mb-12">
                 {project.tools.map((tool, toolIdx) => (
-                  <span key={toolIdx} className="px-2 py-1 bg-white/5 rounded text-[10px] text-cyber-gray font-mono">
+                  <span key={toolIdx} className="font-mono text-[9px] uppercase tracking-widest text-foreground/30 border border-border/10 px-3 py-1">
                     {tool}
                   </span>
                 ))}
               </div>
 
               {/* Link */}
-              <div className="flex items-center gap-2 text-cyber-magenta opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="font-mono text-[11px] uppercase tracking-[0.08em]">View Project</span>
-                <ExternalLink size={12} />
+              <div className="inline-flex items-center gap-4 text-primary group-hover:gap-6 transition-all duration-300">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] font-bold">Case Study</span>
+                <ArrowRight size={14} />
               </div>
             </div>
           </div>

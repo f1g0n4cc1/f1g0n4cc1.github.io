@@ -1,54 +1,34 @@
 import { useEffect, useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, Calendar } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
 
-interface HeroSectionProps {
-  className?: string;
-}
 
-const HeroSection = ({ className = '' }: HeroSectionProps) => {
+const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const bgRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-  const subRef = useRef<HTMLDivElement>(null);
 
   // Load animation
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-      // Background fade in
-      tl.fromTo(bgRef.current,
-        { opacity: 0, scale: 1.06 },
-        { opacity: 1, scale: 1, duration: 0.8 }
+      tl.fromTo(containerRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 1.2 }
       );
 
-      // Headline stagger
-      const headlineLines = headlineRef.current?.querySelectorAll('.headline-line');
-      if (headlineLines) {
-        tl.fromTo(headlineLines,
-          { y: 40, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.7, stagger: 0.08 },
-          '-=0.4'
-        );
-      }
-
-      // Subheadline + CTAs
-      tl.fromTo(subRef.current,
-        { y: 18, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5 },
-        '-=0.3'
+      tl.fromTo(headlineRef.current,
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1 },
+        '-=0.8'
       );
 
-      // Info card
       tl.fromTo(cardRef.current,
-        { x: '10vw', opacity: 0, rotate: 1 },
-        { x: 0, opacity: 1, rotate: 0, duration: 0.7 },
-        '-=0.5'
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1 },
+        '-=0.7'
       );
     }, sectionRef);
 
@@ -58,139 +38,101 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
   // Scroll animation (Entry/Exit)
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Entry Animation: Slide Up & Fade In
-      gsap.fromTo([headlineRef.current, subRef.current],
-        { y: 60, opacity: 0 },
-        { 
-          y: 0, 
-          opacity: 1, 
-          duration: 0.8,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
-
-      gsap.fromTo(cardRef.current,
-        { x: 60, opacity: 0 },
-        { 
-          x: 0, 
-          opacity: 1, 
-          duration: 0.8,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
+      // Elements are handled in useEffect for initial load, 
+      // but we can add secondary triggers here if needed for reveal.
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  const scrollToProjects = () => {
-    const element = document.getElementById('projects');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const scrollToTraining = () => {
-    const element = document.getElementById('training');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <section 
       ref={sectionRef}
       id="hero"
-      className={`section-pinned ${className}`}
+      className="relative w-full bg-background overflow-hidden flex flex-col justify-center items-center py-20 lg:py-40"
     >
-      {/* Background Image */}
-      <img
-        ref={bgRef}
-        src="/hero_hooded_city.jpg"
-        alt="Cybersecurity"
-        className="section-bg"
-      />
-      
-      {/* Overlay */}
-      <div className="section-overlay" />
-      
-      {/* Content Container */}
-      <div className="relative min-h-[100vh] flex flex-col md:flex-row items-stretch md:items-end p-0">
-        
-        {/* Headline Block Container */}
-        <div className="flex-1 flex items-end pb-[10vh] px-[6vw] mt-[20vh] md:mt-0">
-          <div className="w-full max-w-[90vw] md:max-w-[70vw]">
-            <div ref={headlineRef} className="mb-6">
-              <h1 className="headline-display text-[clamp(28px,5.2vw,84px)]">
-                <span className="headline-line block">Security Engineer</span>
-                <span className="headline-line block">OSINT Ninja</span>
-                <span className="headline-line block">Pragmatic Optimist</span>
-              </h1>
-            </div>
+      <div 
+        ref={containerRef}
+        className="relative w-[90vw] lg:w-[85vw] max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-end gap-12 lg:gap-20"
+      >
+        {/* Background Frame (Ma) */}
+        <div className="absolute inset-0 z-0 opacity-[0.03] scale-110 pointer-events-none overflow-hidden">
+           <img
+            src="/hero_bg.jpg"
+            alt=""
+            className="w-full h-full object-cover"
+          />
+        </div>
 
-            <div ref={subRef}>
-              <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.08em] text-cyber-gray mb-6">
-                Detection • Automation • Threat Hunting • Career Coaching
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <a href="#projects" onClick={(e) => { e.preventDefault(); scrollToProjects(); }} className="btn-primary flex items-center justify-center gap-2">
-                  View Projects
-                  <ArrowRight size={14} />
-                </a>
-                <a href="#training" onClick={(e) => { e.preventDefault(); scrollToTraining(); }} className="btn-ghost flex items-center justify-center gap-2">
-                  <Calendar size={14} />
-                  Book a Session
-                </a>
-              </div>
-            </div>
+        {/* Headline - Asymmetric Placement */}
+        <div 
+          ref={headlineRef}
+          className="relative z-10 flex-1 text-left md:pl-[4vw]"
+        >
+          <div className="shoji-line w-24 mb-12 opacity-40" />
+          <h1 className="headline-display text-[clamp(44px,8vw,120px)] text-foreground tracking-tighter leading-[0.85]">
+            <span className="block italic font-bold lowercase text-primary text-[0.45em] mb-4 font-display">specialist</span>
+            <span className="block text-[#000000]">Security</span>
+            <span className="block ml-[4vw] text-[#000000]">Engineer</span>
+          </h1>
+          <p className="mt-12 text-foreground/60 max-w-md text-sm lg:text-base leading-relaxed font-medium">
+            Building resilient digital ecosystems through defensive strategy, OSINT, and minimalist security principles.
+          </p>
+          
+          <div className="mt-12 flex flex-wrap gap-4">
+            <button 
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              className="btn-primary"
+            >
+              Explore work
+            </button>
+            <button 
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="btn-secondary"
+            >
+              Get in touch
+            </button>
           </div>
         </div>
 
-        {/* Info Card Container */}
-        <div className="md:absolute md:right-[4vw] md:top-[12vh] p-[6vw] md:p-0">
-          <div 
-            ref={cardRef}
-            className="w-full md:w-[26vw] md:min-w-[280px] info-card"
-          >
-            <h2 className="font-display font-bold text-lg text-cyber-white mb-1">
-              Jacopo Falcone
-            </h2>
-            <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-cyber-magenta mb-4">
-              Security Engineer · OSINT Specialist · Coach
-            </p>
-            <p className="text-sm text-cyber-gray leading-relaxed mb-4">
-              Focused on understanding how systems behave, how attackers think, and how defenses can be engineered to be resilient.
-            </p>
-            <div className="flex items-center gap-4 pt-4 border-t border-white/8">
-              <div>
-                <span className="font-display font-bold text-xl text-cyber-white">Top 5%</span>
-                <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">TryHackMe Global</span>
-              </div>
-              <div className="w-px h-8 bg-white/10" />
-              <div>
-                <span className="font-display font-bold text-xl text-cyber-white">Top 3</span>
-                <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">LetsDefend Finland</span>
+        {/* Info Card - Minimalist Frame */}
+        <div 
+          ref={cardRef}
+          className="relative z-10 w-full md:w-[28vw] md:min-w-[320px] info-card"
+        >
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-primary font-display font-bold text-xs uppercase tracking-[0.2em] mb-4">
+                Profile
+              </h2>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 border border-foreground/10 flex items-center justify-center grayscale text-foreground/40 text-[10px] font-mono">
+                  [PHOTO]
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold tracking-tight">Jacopo Falcone</h3>
+                  <p className="text-xs text-foreground/40 font-mono">SOC • Engineering • Automation</p>
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-4 pt-3 mt-3 border-t border-white/8">
-              <div>
-                <span className="font-display font-bold text-xl text-cyber-white">20+</span>
-                <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">Detection Rules</span>
-              </div>
-              <div className="w-px h-8 bg-white/10" />
-              <div>
-                <span className="font-display font-bold text-xl text-cyber-white">10+</span>
-                <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">Yrs Leadership</span>
-              </div>
+
+            <div className="pt-8 border-t border-border/10">
+              <h2 className="text-foreground/40 font-display font-bold text-[10px] uppercase tracking-[0.2em] mb-6">
+                Core Competencies
+              </h2>
+              <ul className="grid grid-cols-1 gap-4">
+                {['Detection Engineering', 'Threat Intelligence', 'SOAR Playbooks', 'Incident Response'].map((skill, i) => (
+                  <li key={i} className="flex items-center gap-3 group">
+                    <span className="w-1 h-1 bg-primary group-hover:scale-x-4 transition-transform origin-left" />
+                    <span className="text-xs font-semibold tracking-wide lowercase">{skill}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="pt-8 border-t border-border/10 flex justify-between items-center text-[10px] font-mono text-foreground/40 uppercase tracking-widest">
+              <span>EST. 2024</span>
+              <span>MILAN, IT</span>
             </div>
           </div>
         </div>

@@ -39,7 +39,7 @@ const Navigation = () => {
     <nav 
       className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
         isScrolled 
-          ? 'bg-cyber-black/80 backdrop-blur-xl border-b border-white/5' 
+          ? 'bg-background/80 backdrop-blur-xl border-b border-border/10' 
           : 'bg-transparent'
       }`}
     >
@@ -47,7 +47,7 @@ const Navigation = () => {
         {/* Logo */}
         <button 
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="font-display font-bold text-xl text-cyber-white tracking-tight hover:text-cyber-magenta transition-colors"
+          className="font-display font-bold text-xl text-foreground tracking-tight hover:opacity-70 transition-opacity"
         >
           JF
         </button>
@@ -55,7 +55,7 @@ const Navigation = () => {
         {/* Mobile Toggle */}
         <button 
           onClick={toggleMobileMenu}
-          className="md:hidden text-cyber-white p-2 hover:text-cyber-magenta transition-colors"
+          className="md:hidden text-foreground p-2 hover:opacity-70 transition-opacity"
           aria-label="Toggle Menu"
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -80,43 +80,43 @@ const Navigation = () => {
 
       {/* Mobile Menu Overlay */}
       <div 
-        className={`fixed inset-0 z-[90] bg-cyber-black/95 backdrop-blur-2xl transition-all duration-500 md:hidden ${
-          isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 z-[90] bg-background backdrop-blur-2xl transition-all duration-500 md:hidden ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex flex-col items-center justify-center min-h-screen gap-10">
+        <div className="flex flex-col items-center justify-center min-h-screen gap-8">
           <a 
             href="#projects" 
             onClick={(e) => { e.preventDefault(); scrollToSection('projects'); }} 
-            className="text-3xl font-display font-medium text-cyber-white tracking-widest uppercase hover:text-cyber-magenta transition-colors"
+            className="text-4xl font-display font-bold text-foreground tracking-tight hover:opacity-50 transition-opacity"
           >
-            Work
+            work
           </a>
           <a 
             href="#training" 
             onClick={(e) => { e.preventDefault(); scrollToSection('training'); }} 
-            className="text-3xl font-display font-medium text-cyber-white tracking-widest uppercase hover:text-cyber-magenta transition-colors"
+            className="text-4xl font-display font-bold text-foreground tracking-tight hover:opacity-50 transition-opacity"
           >
-            Services
+            services
           </a>
           <a 
             href="#detection" 
             onClick={(e) => { e.preventDefault(); scrollToSection('detection'); }} 
-            className="text-3xl font-display font-medium text-cyber-white tracking-widest uppercase hover:text-cyber-magenta transition-colors"
+            className="text-4xl font-display font-bold text-foreground tracking-tight hover:opacity-50 transition-opacity"
           >
-            About
+            about
           </a>
           <a 
             href="#contact" 
             onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} 
-            className="text-3xl font-display font-medium text-cyber-white tracking-widest uppercase hover:text-cyber-magenta transition-colors"
+            className="text-4xl font-display font-bold text-foreground tracking-tight hover:opacity-50 transition-opacity"
           >
-            Contact
+            contact
           </a>
           
-          <div className="mt-8 pt-8 border-t border-white/10 w-40 flex flex-col items-center gap-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-cyber-magenta">Jacopo Falcone</span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-cyber-gray">Security Specialist</span>
+          <div className="mt-8 pt-8 border-t border-border/10 w-40 flex flex-col items-center gap-2">
+            <span className="font-display font-bold text-xs uppercase tracking-widest text-primary">Jacopo Falcone</span>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">Security Specialist</span>
           </div>
         </div>
       </div>

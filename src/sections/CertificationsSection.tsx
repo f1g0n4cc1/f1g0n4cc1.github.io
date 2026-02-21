@@ -84,37 +84,41 @@ const CertificationsSection = () => {
     <section 
       ref={sectionRef}
       id="certifications"
-      className="relative bg-cyber-black py-[8vh] px-[6vw]"
+      className="relative bg-background py-20 lg:py-40 px-6 lg:px-12"
     >
       {/* Header */}
-      <div ref={headerRef} className="mb-12">
-        <h2 className="headline-display text-[clamp(32px,4vw,64px)] mb-3">
+      <div ref={headerRef} className="container mx-auto mb-20 md:mb-32">
+        <h2 className="headline-display text-[clamp(44px,6vw,96px)] text-[#000000] mb-6">
           Certifications
         </h2>
-        <p className="font-mono text-xs uppercase tracking-[0.08em] text-cyber-gray">
-          Continuous learning and professional development.
+        <div className="shoji-line w-24 mb-6" />
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/40 max-w-sm">
+          A commitment to continuous learning and professional excellence in cybersecurity.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
         {/* Earned Certifications */}
-        <div ref={earnedRef}>
-          <h3 className="font-display font-semibold text-lg text-cyber-white mb-4 flex items-center gap-2">
-            <CheckCircle size={18} className="text-cyber-magenta" />
-            Earned
-          </h3>
-          <div className="space-y-3">
+        <div ref={earnedRef} className="flex flex-col">
+          <div className="flex items-center gap-4 mb-10 pb-4 border-b border-border/10">
+            <CheckCircle size={18} className="text-primary" />
+            <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] font-bold text-foreground">
+              Earned Awards
+            </h3>
+          </div>
+          
+          <div className="space-y-4">
             {certifications.earned.map((cert, index) => (
               <div 
                 key={index}
-                className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/6 hover:border-cyber-magenta/30 transition-colors"
+                className="info-card flex items-center gap-6 !p-6 !shadow-none group hover:!border-primary transition-colors"
               >
-                <div className="w-10 h-10 rounded-lg bg-cyber-magenta/20 flex items-center justify-center flex-shrink-0">
-                  <cert.icon size={18} className="text-cyber-magenta" />
+                <div className="w-12 h-12 flex items-center justify-center flex-shrink-0 border border-border/10 bg-background group-hover:bg-primary/5 transition-colors">
+                  <cert.icon size={20} className="text-foreground/30 group-hover:text-primary transition-colors" />
                 </div>
                 <div>
-                  <span className="block font-display font-medium text-sm text-cyber-white">{cert.name}</span>
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">{cert.issuer}</span>
+                  <span className="block font-display font-bold text-sm text-[#000000]">{cert.name}</span>
+                  <span className="block font-mono text-[9px] uppercase tracking-widest text-foreground/40 mt-1">{cert.issuer}</span>
                 </div>
               </div>
             ))}
@@ -122,23 +126,26 @@ const CertificationsSection = () => {
         </div>
 
         {/* In Progress */}
-        <div ref={progressRef}>
-          <h3 className="font-display font-semibold text-lg text-cyber-white mb-4 flex items-center gap-2">
-            <Clock size={18} className="text-cyber-magenta" />
-            In Progress
-          </h3>
-          <div className="space-y-3">
+        <div ref={progressRef} className="flex flex-col">
+          <div className="flex items-center gap-4 mb-10 pb-4 border-b border-border/10">
+            <Clock size={18} className="text-foreground/30" />
+            <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] font-bold text-foreground/40">
+              Active Pursuits
+            </h3>
+          </div>
+
+          <div className="space-y-4">
             {certifications.inProgress.map((cert, index) => (
               <div 
                 key={index}
-                className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/6 hover:border-cyber-magenta/30 transition-colors"
+                className="info-card flex items-center gap-6 !p-6 !shadow-none !border-dotted !border-border/20"
               >
-                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
-                  <cert.icon size={18} className="text-cyber-gray" />
+                <div className="w-12 h-12 flex items-center justify-center flex-shrink-0 border border-border/5 bg-background">
+                  <cert.icon size={20} className="text-foreground/10" />
                 </div>
                 <div>
-                  <span className="block font-display font-medium text-sm text-cyber-white">{cert.name}</span>
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">{cert.issuer}</span>
+                  <span className="block font-display font-medium text-sm text-foreground/40 italic">{cert.name}</span>
+                  <span className="block font-mono text-[9px] uppercase tracking-widest text-foreground/20 mt-1">{cert.issuer}</span>
                 </div>
               </div>
             ))}

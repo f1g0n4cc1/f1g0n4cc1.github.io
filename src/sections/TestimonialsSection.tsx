@@ -57,41 +57,47 @@ const TestimonialsSection = () => {
     <section 
       ref={sectionRef}
       id="testimonials"
-      className="relative bg-cyber-navy py-[8vh] px-[6vw]"
+      className="relative bg-background py-20 lg:py-40 px-6 lg:px-12"
     >
       {/* Header */}
-      <div ref={headerRef} className="mb-12">
-        <h2 className="headline-display text-[clamp(32px,4vw,64px)]">
+      <div ref={headerRef} className="container mx-auto mb-20 md:mb-32">
+        <h2 className="headline-display text-[clamp(44px,6vw,96px)] text-[#000000] mb-6">
           What People Say
         </h2>
+        <div className="shoji-line w-24 mb-6" />
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/40 max-w-sm">
+          Feedback from collaborators and industry peers.
+        </p>
       </div>
 
       {/* Testimonials Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
         {testimonials.map((testimonial, idx) => (
           <div
             key={idx}
             ref={el => { cardsRef.current[idx] = el; }}
-            className="testimonial-card"
+            className="testimonial-card flex flex-col justify-between"
           >
-            {/* Quote Icon */}
-            <Quote size={24} className="text-cyber-magenta mb-4 opacity-60" />
+            <div>
+              {/* Quote Icon */}
+              <Quote size={24} className="text-primary mb-8" strokeWidth={1} />
 
-            {/* Quote Text */}
-            <p className="text-sm text-cyber-gray leading-relaxed mb-6">
-              "{testimonial.quote}"
-            </p>
+              {/* Quote Text */}
+              <p className="text-base font-medium leading-relaxed text-foreground/70 mb-10 italic">
+                "{testimonial.quote}"
+              </p>
+            </div>
 
             {/* Author */}
-            <div className="flex items-center gap-3 pt-4 border-t border-white/6">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyber-magenta/30 to-purple-500/30 flex items-center justify-center">
-                <span className="font-mono text-xs text-cyber-white">{testimonial.avatar}</span>
+            <div className="flex items-center gap-4 pt-8 border-t border-border/10">
+              <div className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center border border-primary/10">
+                <span className="font-mono text-[10px] text-primary font-bold">{testimonial.avatar}</span>
               </div>
-              <div>
-                <span className="block font-display font-semibold text-sm text-cyber-white">
+              <div className="flex flex-col">
+                <span className="font-display font-bold text-sm text-[#000000]">
                   {testimonial.name}
                 </span>
-                <span className="block font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">
+                <span className="font-mono text-[9px] uppercase tracking-widest text-foreground/40">
                   {testimonial.role}
                 </span>
               </div>

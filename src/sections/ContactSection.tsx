@@ -1,7 +1,7 @@
 import { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Mail, Linkedin, Github, ExternalLink, Calendar, MapPin, Phone } from 'lucide-react';
+import { Mail, Linkedin, Github, ExternalLink, Calendar, MapPin } from 'lucide-react';
 import { ContactModal } from '@/components/ContactModal';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -57,89 +57,87 @@ const ContactSection = () => {
     <section 
       ref={sectionRef}
       id="contact"
-      className="relative min-h-screen"
+      className="relative bg-background overflow-hidden"
     >
-      {/* Background Image */}
-      <img
-        src="/night_city_contact.jpg"
-        alt="Night City"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
-      
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-cyber-black/78" />
+      <div className="absolute top-0 left-12 w-[1px] h-32 bg-border/20" />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen py-[14vh] px-6">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-[90vh] py-24 lg:py-48 px-6">
         {/* Headline */}
-        <div ref={headlineRef} className="text-center mb-12">
-          <h2 className="headline-display text-[clamp(36px,5vw,80px)]">
-            <span className="block">Let's Build</span>
-            <span className="block">Something</span>
-            <span className="block text-cyber-magenta">Secure.</span>
+        <div ref={headlineRef} className="text-center mb-16 max-w-4xl">
+          <h2 className="headline-display text-[clamp(44px,8vw,120px)] text-[#000000] leading-[0.85] tracking-tight">
+            <span className="block mb-2">Let's Build</span>
+            <span className="block mb-4">Something</span>
+            <span className="block text-primary italic">Secure.</span>
           </h2>
         </div>
 
         {/* Contact Block */}
-        <div ref={contentRef} className="text-center">
-          {/* Email */}
+        <div ref={contentRef} className="text-center flex flex-col items-center">
           {/* Email - Secure Modal */}
           <ContactModal 
             trigger={
-              <button className="inline-flex items-center gap-3 text-cyber-magenta hover:text-cyber-white transition-colors mb-4 cursor-pointer">
-                <Mail size={20} />
-                <span className="font-mono text-lg">Initialize Secure Comms</span>
+              <button className="inline-flex items-center gap-4 text-foreground hover:text-primary transition-all duration-300 mb-12 group">
+                <div className="w-12 h-12 rounded-full border border-border/10 flex items-center justify-center group-hover:border-primary/30 group-hover:bg-primary/5 transition-all">
+                  <Mail size={18} className="text-foreground/40 group-hover:text-primary" />
+                </div>
+                <span className="font-mono text-xs uppercase tracking-[0.3em] font-bold">Contact Me</span>
               </button>
             }
           />
 
-          {/* Location & Phone */}
-          <div className="flex items-center justify-center gap-6 mb-8">
-            <div className="flex items-center gap-2 text-cyber-gray">
-              <MapPin size={14} />
-              <span className="font-mono text-xs uppercase tracking-[0.08em]">Helsinki, Finland</span>
-            </div>
-            <div className="flex items-center gap-2 text-cyber-gray">
-              <Phone size={14} />
-              <span className="font-mono text-xs uppercase tracking-[0.08em]">+358 4578332673</span>
+          {/* Location */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 mb-16">
+            <div className="flex items-center gap-4">
+              <MapPin size={16} className="text-primary/40" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/40">Helsinki, Finland</span>
             </div>
           </div>
 
           {/* Social Links */}
-          <div className="flex items-center justify-center gap-6 mb-10">
+          <div className="flex items-center justify-center gap-10 mb-20">
             {socialLinks.map((link, index) => (
               <a
                 key={index}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-cyber-gray hover:text-cyber-white transition-colors"
+                className="group flex flex-col items-center gap-3 transition-colors"
               >
-                <link.icon size={18} />
-                <span className="font-mono text-xs uppercase tracking-[0.08em]">{link.label}</span>
+                <div className="text-foreground/30 group-hover:text-primary transition-colors">
+                  <link.icon size={20} strokeWidth={1.5} />
+                </div>
+                <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-foreground/20 group-hover:text-foreground/40 transition-colors">
+                  {link.label}
+                </span>
               </a>
             ))}
           </div>
 
           {/* CTA Button */}
-          <button className="btn-primary flex items-center gap-2 mx-auto">
-            <Calendar size={14} />
-            Schedule a Call
+          <button className="info-card !p-0 overflow-hidden group">
+            <div className="flex items-center gap-6 px-10 py-5 bg-background hover:bg-primary/5 transition-colors">
+              <Calendar size={16} className="text-primary" />
+              <span className="font-mono text-[11px] uppercase tracking-[0.3em] font-bold text-[#000000]">Schedule a Call</span>
+            </div>
           </button>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-0 left-0 right-0 py-6 px-6 border-t border-white/5">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray">
-            © Jacopo Falcone. All rights reserved.
-          </span>
+      <div className="w-full py-12 px-12 border-t border-border/10">
+        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-6">
-            <a href="#" className="font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray hover:text-cyber-white transition-colors">
+            <div className="w-8 h-8 flex items-center justify-center border border-border/10 font-bold text-xs">JF</div>
+            <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/30">
+              © 2024 Jacopo Falcone.
+            </span>
+          </div>
+          <div className="flex items-center gap-10">
+            <a href="#" className="font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/30 hover:text-primary transition-colors">
               Privacy
             </a>
-            <a href="#" className="font-mono text-[10px] uppercase tracking-[0.08em] text-cyber-gray hover:text-cyber-white transition-colors">
+            <a href="#" className="font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/30 hover:text-primary transition-colors">
               Terms
             </a>
           </div>
