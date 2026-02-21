@@ -30,12 +30,12 @@ function App() {
       
       {/* Sections */}
       <main className="relative">
-        <HeroSection className="z-10" />
-        <DetectionSection className="z-20" />
-        <OSINTSection className="z-30" />
-        <AutomationSection className="z-40" />
-        <ThreatHuntingSection className="z-50" />
-        <TrainingSection className="z-[60]" />
+        <HeroSection />
+        <DetectionSection />
+        <OSINTSection />
+        <AutomationSection />
+        <ThreatHuntingSection />
+        <TrainingSection />
         <ProjectsSection />
         <TestimonialsSection />
         <CertificationsSection />
