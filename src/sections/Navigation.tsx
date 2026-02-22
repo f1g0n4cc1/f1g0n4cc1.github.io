@@ -1,124 +1,122 @@
-import { useEffect, useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Menu, X, Mail, Sun, Moon, FileText, User, Book } from "lucide-react";
 
 const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'));
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-    // Prevent scrolling when menu is open
-    if (!isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+  const toggleDarkMode = () => {
+    const root = document.documentElement;
+    if (root.classList.contains('dark')) {
+      root.classList.remove('dark');
+      setIsDark(false);
     } else {
-      document.body.style.overflow = 'auto';
+      root.classList.add('dark');
+      setIsDark(true);
     }
   };
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+    if (!isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
     }
+  };
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleWorksClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById('works');
+        if (element) element.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    } else {
+      const element = document.getElementById('works');
+      if (element) element.scrollIntoView({ behavior: "smooth" });
+    }
+    
     if (isMobileMenuOpen) {
       setIsMobileMenuOpen(false);
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
+    }
+  };
+
+  const handleNavRoute = (path: string) => {
+    navigate(path);
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+      document.body.style.overflow = "auto";
     }
   };
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-background/80 backdrop-blur-xl border-b border-border/10' 
-          : 'bg-transparent'
-      }`}
-    >
-      <div className="flex items-center justify-between px-6 lg:px-12 py-4">
-        {/* Logo */}
-        <button 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="font-display font-bold text-xl text-foreground tracking-tight hover:opacity-70 transition-opacity"
-        >
-          JF
-        </button>
-
-        {/* Mobile Toggle */}
-        <button 
-          onClick={toggleMobileMenu}
-          className="md:hidden text-foreground p-2 hover:opacity-70 transition-opacity"
-          aria-label="Toggle Menu"
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-
-        {/* Nav Links (Desktop) */}
-        <div className="hidden md:flex items-center gap-8">
-          <a href="#projects" onClick={(e) => { e.preventDefault(); scrollToSection('projects'); }} className="nav-link">
-            Work
-          </a>
-          <a href="#training" onClick={(e) => { e.preventDefault(); scrollToSection('training'); }} className="nav-link">
-            Services
-          </a>
-          <a href="#detection" onClick={(e) => { e.preventDefault(); scrollToSection('detection'); }} className="nav-link">
-            About
-          </a>
-          <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} className="nav-link">
-            Contact
-          </a>
+    <nav className="relative z-[100]">
+      {/* Desktop Links */}
+      <div className="hidden md:flex">
+        <div className="text-kjColorGray dark:text-kjColorLight text-sm md:flex-1">
+          <div className="font-bold md:ml-4 inline-block py-1 px-2 f-link rounded">
+            <a href="mailto:jacopofalcone@proton.me" className="flex items-center">
+              <Mail className="w-4 h-4 mr-1" />
+              jacopofalcone@proton.me
+            </a>
+          </div>
+          <span 
+            className="cursor-pointer ml-10 dark:text-kjColorLight inline-block transition-transform hover:scale-110" 
+            onClick={toggleDarkMode}
+          >
+            {isDark ? <Sun className="w-5 h-5 ml-1" /> : <Moon className="w-5 h-5 ml-1" />}
+          </span>
+        </div>
+        
+        <div className="flex gap-2 text-kjColorGray dark:text-kjColorLight">
+          <button onClick={handleWorksClick} className="focus:outline-none py-1 px-2 capitalize f-link rounded flex items-center">
+            <FileText className="w-4 h-4 mr-1" /> works
+          </button>
+          <button onClick={() => handleNavRoute('/resume')} className="focus:outline-none py-1 px-2 capitalize f-link rounded flex items-center">
+            <User className="w-4 h-4 mr-1" /> resume
+          </button>
+          <button onClick={() => handleNavRoute('/shelf')} className="focus:outline-none py-1 px-2 capitalize f-link rounded flex items-center">
+            <Book className="w-4 h-4 mr-1" /> shelf
+          </button>
         </div>
       </div>
 
+      {/* Mobile Toggle */}
+      <button
+        onClick={toggleMobileMenu}
+        className="md:hidden absolute right-0 top-0 text-kjColorGray dark:text-kjColorLight p-2 hover:opacity-70 transition-opacity z-[101]"
+        aria-label="Toggle Menu"
+      >
+        {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+      </button>
+
       {/* Mobile Menu Overlay */}
-      <div 
-        className={`fixed inset-0 z-[90] bg-background backdrop-blur-2xl transition-all duration-500 md:hidden ${
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+      <div
+        className={`fixed inset-0 z-[90] bg-kjColorLight dark:bg-kjColorBlack transition-all duration-500 md:hidden flex flex-col items-center justify-center min-h-screen gap-8 ${
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex flex-col items-center justify-center min-h-screen gap-8">
-          <a 
-            href="#projects" 
-            onClick={(e) => { e.preventDefault(); scrollToSection('projects'); }} 
-            className="text-4xl font-display font-bold text-foreground tracking-tight hover:opacity-50 transition-opacity"
-          >
-            work
-          </a>
-          <a 
-            href="#training" 
-            onClick={(e) => { e.preventDefault(); scrollToSection('training'); }} 
-            className="text-4xl font-display font-bold text-foreground tracking-tight hover:opacity-50 transition-opacity"
-          >
-            services
-          </a>
-          <a 
-            href="#detection" 
-            onClick={(e) => { e.preventDefault(); scrollToSection('detection'); }} 
-            className="text-4xl font-display font-bold text-foreground tracking-tight hover:opacity-50 transition-opacity"
-          >
-            about
-          </a>
-          <a 
-            href="#contact" 
-            onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }} 
-            className="text-4xl font-display font-bold text-foreground tracking-tight hover:opacity-50 transition-opacity"
-          >
-            contact
-          </a>
-          
-          <div className="mt-8 pt-8 border-t border-border/10 w-40 flex flex-col items-center gap-2">
-            <span className="font-display font-bold text-xs uppercase tracking-widest text-primary">Jacopo Falcone</span>
-            <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">Security Specialist</span>
-          </div>
+        <div className="flex gap-6 mb-8 text-kjColorGray dark:text-kjColorLight">
+          <span className="cursor-pointer" onClick={toggleDarkMode}>
+            {isDark ? <Sun className="w-8 h-8" /> : <Moon className="w-8 h-8" />}
+          </span>
         </div>
+        <button onClick={handleWorksClick} className="text-3xl font-display font-bold text-kjColorGray dark:text-kjColorLight capitalize tracking-tight hover:opacity-50 transition-opacity">
+          works
+        </button>
+        <button onClick={() => handleNavRoute('/resume')} className="text-3xl font-display font-bold text-kjColorGray dark:text-kjColorLight capitalize tracking-tight hover:opacity-50 transition-opacity">
+          resume
+        </button>
+        <button onClick={() => handleNavRoute('/shelf')} className="text-3xl font-display font-bold text-kjColorGray dark:text-kjColorLight capitalize tracking-tight hover:opacity-50 transition-opacity">
+          shelf
+        </button>
       </div>
     </nav>
   );
