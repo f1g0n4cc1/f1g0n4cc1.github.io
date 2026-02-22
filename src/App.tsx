@@ -1,46 +1,44 @@
-import { useRef } from 'react';
+import { useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Routes, Route } from 'react-router-dom';
 import Navigation from './sections/Navigation';
-import HeroSection from './sections/HeroSection';
-import DetectionSection from './sections/DetectionSection';
-import OSINTSection from './sections/OSINTSection';
-import AutomationSection from './sections/AutomationSection';
-import ThreatHuntingSection from './sections/ThreatHuntingSection';
-import TrainingSection from './sections/TrainingSection';
-import ProjectsSection from './sections/ProjectsSection';
-import TestimonialsSection from './sections/TestimonialsSection';
-import CertificationsSection from './sections/CertificationsSection';
-import ContactSection from './sections/ContactSection';
+import Home from './pages/Home';
+import Resume from './pages/Resume';
+import Shelf from './pages/Shelf';
+import Footer from './sections/Footer';
+import Sidebar from './components/Sidebar';
 
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
-  const mainRef = useRef<HTMLDivElement>(null);
-
-
+  useEffect(() => {
+    // Force dark mode on html for this build
+    document.documentElement.classList.add('dark');
+  }, []);
 
   return (
-    <div ref={mainRef} className="relative bg-cyber-black">
-      {/* Grain overlay */}
-      <div className="grain-overlay" />
-      
-      {/* Navigation */}
-      <Navigation />
-      
-      {/* Sections */}
-      <main className="relative">
-        <HeroSection />
-        <DetectionSection />
-        <OSINTSection />
-        <AutomationSection />
-        <ThreatHuntingSection />
-        <TrainingSection />
-        <ProjectsSection />
-        <TestimonialsSection />
-        <CertificationsSection />
-        <ContactSection />
-      </main>
+    <div className="md:bg-kjColorLight dark:bg-kjColorBlack md:py-16 min-h-screen transition-colors duration-300">
+      <div className="bg-white dark:bg-kjColorBlack md:max-w-6xl md:m-auto sm:rounded-lg p-2 md:p-8 text-kjColorGray dark:text-kjColorLight md:shadow-2xl transition-colors duration-300">
+        <div className="md:flex">
+          {/* Sidebar */}
+          <Sidebar />
+
+          {/* Main Content Area */}
+          <div className="md:flex-1">
+            <Navigation />
+            
+            <main className="relative">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/resume" element={<Resume />} />
+                <Route path="/shelf" element={<Shelf />} />
+              </Routes>
+              <Footer />
+            </main>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

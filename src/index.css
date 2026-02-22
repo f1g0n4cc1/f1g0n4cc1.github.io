@@ -6,26 +6,26 @@
 
 @layer base {
   :root {
-    --background: 38 22% 95%;      /* #f5f2ed */
-    --foreground: 0 0% 10%;      /* #1A1A1A */
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 348 83% 37%;     /* #BC002D - Japan Red */
+    --background: 0 0% 4%; /* #0a0a0a */
+    --foreground: 0 0% 100%; /* #ffffff */
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 217 91% 60%; /* #3b82f6 - Blue */
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 93%;
-    --secondary-foreground: 0 0% 10%;
-    --muted: 0 0% 90%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 348 83% 37%;
+    --secondary: 240 4% 16%; /* #27272a */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 65%; /* #a1a1aa */
+    --accent: 217 91% 60%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 10%;          /* Thin black borders */
-    --input: 0 0% 90%;
-    --ring: 348 83% 37%;
-    --radius: 0;                 /* Minimalist square corners */
+    --border: 240 4% 16%; /* #27272a */
+    --input: 240 4% 16%;
+    --ring: 217 91% 60%;
+    --radius: 0.5rem;
   }
 }
 
@@ -51,7 +51,7 @@
     line-height: 1.7;
     overflow-x: hidden;
   }
-  
+
   section {
     position: relative;
     width: 100%;
@@ -112,7 +112,7 @@
 
 .shoji-line {
   height: 1px;
-  background: #1A1A1A;
+  background: #1a1a1a;
   width: 100%;
   opacity: 0.15;
 }
@@ -124,40 +124,40 @@
   text-transform: uppercase;
   letter-spacing: -0.03em;
   line-height: 0.92;
-  color: #1A1A1A;
+  color: #1a1a1a;
 }
 
 /* Card styles */
 .info-card {
-  background: #FFFFFF;
-  border: 1px solid #1A1A1A;
+  background: #ffffff;
+  border: 1px solid #1a1a1a;
   padding: 2.5rem;
   box-shadow: 12px 12px 0px rgba(26, 26, 26, 0.03);
 }
 
 /* Button styles */
 .btn-primary {
-  background: #FFFFFF;
-  color: #1A1A1A;
+  background: #ffffff;
+  color: #1a1a1a;
   font-family: "IBM Plex Mono", monospace;
   font-weight: 600;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: 14px 28px;
-  border: 1px solid #1A1A1A;
+  border: 1px solid #1a1a1a;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-primary:hover {
-  background: #BC002D;
-  color: #FFFFFF;
-  border-color: #BC002D;
+  background: #bc002d;
+  color: #ffffff;
+  border-color: #bc002d;
 }
 
 .btn-secondary {
   background: transparent;
-  color: #1A1A1A;
+  color: #1a1a1a;
   font-family: "IBM Plex Mono", monospace;
   font-weight: 600;
   font-size: 13px;
@@ -169,12 +169,12 @@
 }
 
 .btn-secondary:hover {
-  border-color: #1A1A1A;
+  border-color: #1a1a1a;
 }
 
 .btn-ghost {
   background: transparent;
-  color: #1A1A1A;
+  color: #1a1a1a;
   font-family: "IBM Plex Mono", monospace;
   font-weight: 600;
   font-size: 13px;
@@ -190,7 +190,7 @@
 
 /* Link styles */
 .link-accent {
-  color: #BC002D;
+  color: #bc002d;
   font-family: "IBM Plex Mono", monospace;
   font-size: 12px;
   text-transform: uppercase;
@@ -205,7 +205,7 @@
 
 /* Navigation */
 .nav-link {
-  color: #1A1A1A;
+  color: #1a1a1a;
   font-family: "Inter", sans-serif;
   font-weight: 500;
   font-size: 14px;
@@ -220,8 +220,8 @@
 
 /* Project card */
 .project-card {
-  background: #FFFFFF;
-  border: 1px solid #1A1A1A;
+  background: #ffffff;
+  border: 1px solid #1a1a1a;
   padding: 0;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -231,7 +231,7 @@
 .project-card:hover {
   transform: translateY(-8px);
   box-shadow: 20px 20px 0px rgba(188, 0, 45, 0.05);
-  border-color: #BC002D;
+  border-color: #bc002d;
 }
 
 .project-card:hover .project-card-image {
@@ -244,8 +244,8 @@
 
 /* Testimonial card */
 .testimonial-card {
-  background: #FFFFFF;
-  border: 1px solid #1A1A1A;
+  background: #ffffff;
+  border: 1px solid #1a1a1a;
   padding: 2.5rem;
   box-shadow: 12px 12px 0px rgba(26, 26, 26, 0.03);
 }
@@ -264,13 +264,13 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #BC002D;
+  background: #bc002d;
 }
 
 /* Selection */
 ::selection {
   background: rgba(188, 0, 45, 0.1);
-  color: #1A1A1A;
+  color: #1a1a1a;
 }
 
 /* Accessibility */
@@ -279,3 +279,95 @@
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+/* Kenneth Jimmy Refactor Layout & Animation Classes */
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 5%;
+  align-items: center;
+}
+
+.hero-section {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 5%;
+}
+
+.name-reveal {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.role {
+  color: hsl(var(--muted-foreground));
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  margin-bottom: 2rem;
+}
+
+.talk-btn {
+  background: transparent;
+  border: 1px solid hsl(var(--muted-foreground));
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.talk-btn:hover {
+  background: white;
+  color: black;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+@media (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.skill-card {
+  border: 1px solid hsl(var(--border));
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+/* Kenneth Jimmy Extracted Component Styles */
+.card { position:relative; min-height:23rem; box-shadow:0 .332071px 2.21381px rgba(0,0,0,.0119),0 .798012px 5.32008px rgba(0,0,0,.0258),0 1.50259px 10.0172px rgba(0,0,0,.0368),0 2.68036px 17.869px rgba(0,0,0,.0479),0 5.01331px 33.4221px rgba(0,0,0,.0621),0 12px 80px rgba(0,0,0,.09); border-radius:.5rem; transition:all .2s }
+.card:hover { transform:translateY(-5px) }
+.pf-card { position:relative; box-shadow:0 .332071px 2.21381px rgba(0,0,0,.0119),0 .798012px 5.32008px rgba(0,0,0,.0258),0 1.50259px 10.0172px rgba(0,0,0,.0368),0 2.68036px 17.869px rgba(0,0,0,.0479),0 5.01331px 33.4221px rgba(0,0,0,.0621),0 12px 80px rgba(0,0,0,.09); border-radius:.5rem; transition:all .2s }
+
+.kj-border { position:relative; height:.2rem }
+.kj-border__elips { position:absolute; top:-.2rem; left:-.2rem }
+
+.letter { font-size:0; margin:-6px }
+.callout { height:18px; width:80px; background-image:-moz-linear-gradient(top,#2b2929,#2b2929); position:relative; padding:10px; border-radius:3px; margin:25px; min-height:50px; border:1px solid #2b2929; text-shadow:0 0 1px #000; transform:scale(0) }
+.callout:before { content:""; width:0; height:0; border:.8em solid transparent; position:absolute }
+.callout.top-right:before { right:7px; bottom:-20px; border-top:10px solid #2b2929 }
+
+.des { transform:translateY(70px); opacity:0 }
+.message { transform:translateY(100px); opacity:0 }
+
+.talk-wrapper { position:relative; opacity:0 }
+.talk { position:relative; right:-55px; z-index:2; display:flex; align-items:center; justify-content:center; border:1px solid #fff; background:#f3877e; border-radius:50%; height:100px; width:100px }
+.talk-pulse { position:absolute; z-index:1; height:120px; width:120px; top:50%; left:50%; margin-top:-60px; margin-left:-60px; background:#e45447; border-radius:50%; opacity:0; transform:scale(0) }
+.talk-img { height:70%; object-fit: contain; }
+
+.f-link { transition:all .2s }
+.f-link:active, .f-link:hover { background-color:#e45447; color:#f2f0ee; box-shadow:0 1rem 2rem rgba(43,41,41,.4); transform:rotate(-5deg) scale(1.1) }
+
+/* Utility additions */
+.dark-mode .dark\:bg-kjColorBlack, .dark-mode.dark\:bg-kjColorBlack { --bg-opacity:1; background-color:#0d1017; background-color:rgba(13,16,23,var(--bg-opacity)) }
+.dark-mode .dark\:text-kjColorLight, .dark-mode.dark\:text-kjColorLight { --text-opacity:1; color:#f2f0ee; color:rgba(242,240,238,var(--text-opacity)) }
