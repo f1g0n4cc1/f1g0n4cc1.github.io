@@ -1,139 +1,103 @@
-import { useEffect, useRef, useLayoutEffect } from 'react';
+import { useRef } from 'react';
 import { gsap } from 'gsap';
-
-
+import { useGSAP } from '@gsap/react';
+import { MessageCircle } from 'lucide-react';
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const headlineRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
+  
+  useGSAP(() => {
+    // Initialize GSAP Timeline to match the reference animations
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-  // Load animation
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    // Reveal "It's me" Callout
+    tl.to(".callout", {
+      scale: 1,
+      duration: 0.8,
+      ease: "back.out(1.7)"
+    });
 
-      tl.fromTo(containerRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 1.2 }
-      );
+    // Animate Name letters/words
+    tl.fromTo(".letter", 
+      { margin: "-6px", fontSize: "0", opacity: 0 },
+      { margin: "0px", fontSize: "clamp(2.25rem, 6vw, 4rem)", opacity: 1, duration: 1, ease: "power4.out", stagger: 0.2 },
+      "-=0.4"
+    );
 
-      tl.fromTo(headlineRef.current,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1 },
-        '-=0.8'
-      );
+    // Reveal Description / Role (.des)
+    tl.to(".des", {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      stagger: 0.2
+    }, "-=0.6");
 
-      tl.fromTo(cardRef.current,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1 },
-        '-=0.7'
-      );
-    }, sectionRef);
+    // Reveal Message
+    tl.to(".message", {
+      y: 0,
+      opacity: 1,
+      duration: 0.8
+    }, "-=0.6");
+    
+    // Reveal Talk Button
+    tl.to(".talk-wrapper", {
+      opacity: 1,
+      duration: 0.8
+    }, "-=0.4");
 
-    return () => ctx.revert();
-  }, []);
+    // Pulsing Animation loop for talk button
+    gsap.to(".talk-pulse", {
+      scale: 1,
+      opacity: 0,
+      duration: 1.5,
+      repeat: -1,
+      ease: "power1.out"
+    });
 
-  // Scroll animation (Entry/Exit)
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // Elements are handled in useEffect for initial load, 
-      // but we can add secondary triggers here if needed for reveal.
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  }, { scope: sectionRef });
 
   return (
     <section 
       ref={sectionRef}
       id="hero"
-      className="relative w-full bg-background overflow-hidden flex flex-col justify-center items-center py-20 lg:py-40"
+      className="mt-16 md:mt-24 relative"
     >
-      <div 
-        ref={containerRef}
-        className="relative w-[90vw] lg:w-[85vw] max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-end gap-12 lg:gap-20"
-      >
-        {/* Background Frame (Ma) */}
-        <div className="absolute inset-0 z-0 opacity-[0.03] scale-110 pointer-events-none overflow-hidden">
-           <img
-            src="/hero_bg.jpg"
-            alt=""
-            className="w-full h-full object-cover"
-          />
+      {/* Callout */}
+      <div className="callout top-right inline-block bg-black dark:bg-black border border-kjColorGray dark:border-white">
+        <div className="font-bold flex items-center text-white dark:text-kjColorLight text-xs">
+          <span>It's me</span>
         </div>
+      </div>
 
-        {/* Headline - Asymmetric Placement */}
-        <div 
-          ref={headlineRef}
-          className="relative z-10 flex-1 text-left md:pl-[4vw]"
-        >
-          <div className="shoji-line w-24 mb-12 opacity-40" />
-          <h1 className="headline-display text-[clamp(44px,8vw,120px)] text-foreground tracking-tighter leading-[0.85]">
-            <span className="block italic font-bold lowercase text-primary text-[0.45em] mb-4 font-display">specialist</span>
-            <span className="block text-[#000000]">Security</span>
-            <span className="block ml-[4vw] text-[#000000]">Engineer</span>
-          </h1>
-          <p className="mt-12 text-foreground/60 max-w-md text-sm lg:text-base leading-relaxed font-medium">
-            Building resilient digital ecosystems through defensive strategy, OSINT, and minimalist security principles.
-          </p>
+      <div className="md:flex justify-between mt-6">
+        {/* Main Text Area */}
+        <div>
+          <h1 className="text-4xl md:text-6xl letter font-black text-kjColorBlack dark:text-kjColorLight">JACOPO</h1>
+          <h1 className="text-4xl md:text-6xl letter font-black text-kjColorBlack dark:text-kjColorLight">FALCONE</h1>
           
-          <div className="mt-12 flex flex-wrap gap-4">
-            <button 
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              className="btn-primary"
-            >
-              Explore work
-            </button>
-            <button 
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="btn-secondary"
-            >
-              Get in touch
-            </button>
+          <div className="text-sm tracking-widest des mt-3 text-kjColorGray dark:text-kjColorLight">
+            <span className="font-bold">SECURITY</span> ENGINEER
+          </div>
+          
+          <div className="max-w-lg mt-5 tracking-wider md:leading-8 message text-kjColorGray dark:text-kjColorLight">
+            Driven cybersecurity professional focused on risk mitigation. I specialize in helping businesses protect their data and digital assets, implementing tailored security strategies to prevent cyber threats, ensure regulatory compliance, and strengthen overall security posture.
+          </div>
+          
+          <div className="flex items-center justify-start mt-8 md:mt-16">
+            <a href="mailto:jacopofalcone@proton.me" className="inline-block relative">
+               <div className="talk-wrapper">
+                 <div className="talk text-white font-bold text-center p-4">
+                    <MessageCircle size={32} />
+                 </div>
+                 <div className="talk-pulse"></div>
+               </div>
+            </a>
           </div>
         </div>
 
-        {/* Info Card - Minimalist Frame */}
-        <div 
-          ref={cardRef}
-          className="relative z-10 w-full md:w-[28vw] md:min-w-[320px] info-card"
-        >
-          <div className="space-y-8">
-            <div>
-              <h2 className="text-primary font-display font-bold text-xs uppercase tracking-[0.2em] mb-4">
-                Profile
-              </h2>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 border border-foreground/10 flex items-center justify-center grayscale text-foreground/40 text-[10px] font-mono">
-                  [PHOTO]
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold tracking-tight">Jacopo Falcone</h3>
-                  <p className="text-xs text-foreground/40 font-mono">SOC • Engineering • Automation</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-8 border-t border-border/10">
-              <h2 className="text-foreground/40 font-display font-bold text-[10px] uppercase tracking-[0.2em] mb-6">
-                Core Competencies
-              </h2>
-              <ul className="grid grid-cols-1 gap-4">
-                {['Detection Engineering', 'Threat Intelligence', 'SOAR Playbooks', 'Incident Response'].map((skill, i) => (
-                  <li key={i} className="flex items-center gap-3 group">
-                    <span className="w-1 h-1 bg-primary group-hover:scale-x-4 transition-transform origin-left" />
-                    <span className="text-xs font-semibold tracking-wide lowercase">{skill}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="pt-8 border-t border-border/10 flex justify-between items-center text-[10px] font-mono text-foreground/40 uppercase tracking-widest">
-              <span>EST. 2024</span>
-              <span>MILAN, IT</span>
-            </div>
+        <div className="mt-8 md:-mt-8 des z-10 hidden md:block">
+          <div className="bg-gray-100 dark:bg-kjColorDark rounded-full h-80 w-80 text-center flex justify-center shadow-lg relative cursor-pointer overflow-hidden items-center">
+             <img src="https://placehold.co/400x400/1a1a1a/ffffff?text=Profile+Image" alt="Profile Placeholder" className="w-full h-full object-cover" />
           </div>
         </div>
       </div>
