@@ -38,13 +38,14 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        cyber: {
-          black: '#070A12',
-          navy: '#0B0F1C',
-          magenta: '#FF2D8D',
-          white: '#F4F7FF',
-          gray: '#A7B1C8',
-        }
+        kjColorPrime: '#e45447',
+        kjColorPrimeLight: '#d8c7b8',
+        kjColorLight: '#f2f0ee',
+        kjColorDark: '#2b2929',
+        kjColorSecondary: '#607393',
+        kjColorGold: '#e29d51',
+        kjColorBlack: '#0d1017',
+        kjColorGray: '#58595b',
       },
       fontFamily: {
         display: ['Sora', 'sans-serif'],
