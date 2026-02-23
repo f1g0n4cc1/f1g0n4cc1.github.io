@@ -17,7 +17,7 @@ const Sidebar = () => {
         <a href="https://github.com/f1g0n4cc1" target="_blank" rel="noopener noreferrer">
           <Github className="text-xl text-kjColorGray dark:text-kjColorLight hover:text-kjColorPrime transition-colors w-5 h-5" />
         </a>
-        <a href="https://twitter.com/jfalconedev" target="_blank" rel="noopener noreferrer">
+        <a href="https://x.com/magreetti" target="_blank" rel="noopener noreferrer">
           <svg 
             viewBox="0 0 24 24" 
             className="w-5 h-5 fill-current text-kjColorGray dark:text-kjColorLight hover:text-kjColorPrime transition-colors"
