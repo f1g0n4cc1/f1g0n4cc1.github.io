@@ -97,7 +97,7 @@ const HeroSection = () => {
 
         <div className="mt-8 md:-mt-8 des z-10 hidden md:block">
           <div className="bg-gray-100 dark:bg-kjColorDark rounded-full h-80 w-80 text-center flex justify-center shadow-lg relative cursor-pointer overflow-hidden items-center">
-             <img src="https://placehold.co/400x400/1a1a1a/ffffff?text=Profile+Image" alt="Profile Placeholder" className="w-full h-full object-cover" />
+             <img src="/Gemini_Generated_Image_4axkoe4axkoe4axk.png" alt="Profile Picture" className="w-full h-full object-cover" />
           </div>
         </div>
       </div>

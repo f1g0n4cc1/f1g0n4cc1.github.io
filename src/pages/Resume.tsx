@@ -17,13 +17,13 @@ const Resume = () => {
     { name: 'Splunk', slug: 'splunk', invertDark: true },
     { name: 'Wireshark', slug: 'wireshark' },
     { name: 'Bash', slug: 'gnubash', invertDark: true },
-    { name: 'AWS', slug: 'amazonwebservices', invertDark: true }
+    { name: 'AWS', slug: 'amazonwebservices', customUrl: 'https://res.cloudinary.com/dwa1jtluu/image/upload/q_auto,f_auto/v1653463600/kenjimmy.me/kisspng-logo-amazon-web-services-amazon-com-portable-netwo-5c57904c50a156.9772938415492424443303_rfhji1.png', invertDark: true }
   ];
 
-  const renderTechCard = (tech: { name: string, slug: string, invertDark?: boolean }) => (
+  const renderTechCard = (tech: { name: string, slug: string, invertDark?: boolean, customUrl?: string }) => (
     <div key={tech.name} className="flex flex-col items-center justify-center gap-3 bg-kjColorLight dark:bg-kjColorDark rounded p-6 transition-all hover:border-kjColorPrime hover:shadow-md group cursor-default">
       <img 
-        src={`https://cdn.simpleicons.org/${tech.slug}`} 
+        src={tech.customUrl || `https://cdn.simpleicons.org/${tech.slug}`}
         alt={tech.name} 
         className={`w-10 h-10 transition-transform group-hover:scale-110 ${tech.invertDark ? 'dark:invert' : ''}`} 
       />
